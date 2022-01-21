@@ -78,7 +78,7 @@ public final class ServerManager implements Runnable {
         return true;
     }
 
-    void loadImages(boolean lookup) {
+    private void loadImages (boolean lookup) {
         if (lookup && lookupForRunningServers())
             return;
         File imgPath = Paths.get(IMAGE_PATH).toFile();
