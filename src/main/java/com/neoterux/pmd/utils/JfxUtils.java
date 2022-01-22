@@ -8,13 +8,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public final class JfxUtils {
-    private JfxUtils() {
+    private JfxUtils () {
     }
-
-    public static Parent loadFxml(String name) throws IOException, NullPointerException {
-        Parent p;
-        p = FXMLLoader.load(Objects.
-                requireNonNull(Launcher.class.getResource(name + ".fxml")));
-        return p;
+    
+    public static Parent loadFxml (String name) throws IOException, NullPointerException {
+        return getLoaderOf(name + ".fxml").load();
+    }
+    
+    public static FXMLLoader getLoaderOf (String fxml) throws IOException, NullPointerException {
+        return new FXMLLoader(Objects.requireNonNull(Launcher.class.getResource(fxml)));
     }
 }
