@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<TitledPane xmlns:fx="http://javafx.com/fxml/1" collapsible="false" prefHeight="208.0" prefWidth="281.0"
+            text="Juegos Disponibles" xmlns="http://javafx.com/javafx/16"
+            fx:controller="com.neoterux.pmd.controllers.ServerSelectionController">
+    <font>
+        <Font name="System Bold" size="13.0"/>
+    </font>
+    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+        <ListView fx:id="serverContainer" prefHeight="200.0" prefWidth="200.0"/>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#addServer" text="Añadir"/>
+                <Button mnemonicParsing="false" onAction="#close" text="Cancelar"/>
+            </buttons>
+        </ButtonBar>
+    </VBox>
+</TitledPane>
