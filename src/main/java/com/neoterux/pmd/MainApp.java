@@ -1,6 +1,8 @@
 package com.neoterux.pmd;
 
 import com.neoterux.pmd.controllers.MainController;
+import com.neoterux.pmd.controllers.OwnerWindowController;
+import com.neoterux.server.api.ServerManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +25,15 @@ public class MainApp extends Application {
             primaryStage.setScene(mainScene);
             primaryStage.show();
         } catch (NullPointerException npe) {
-        
+    
         }
+    }
+    
+    @Override
+    public void stop () throws Exception {
+        System.out.println("A");
+        OwnerWindowController.workers.shutdownNow();
+        ServerManager.closeInstances();
+        super.stop();
     }
 }

@@ -3,458 +3,523 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            prefHeight="391.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/17"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" onKeyPressed="#delKeyDetect" onKeyTyped="#delKeyDetect"
+            prefHeight="324.0" prefWidth="800.0" stylesheets="@styles/game.css" xmlns="http://javafx.com/javafx/17"
             fx:controller="com.neoterux.pmd.controllers.OwnerWindowController">
-    <BorderPane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <right>
-            <TitledPane text="Estado Jugador" BorderPane.alignment="CENTER">
-                <StackPane fx:id="pStatusContainer" prefHeight="150.0" prefWidth="200.0"/>
-            </TitledPane>
-        </right>
-        <center>
-            <FlowPane fx:id="wordContainer" BorderPane.alignment="CENTER"/>
-        </center>
-    </BorderPane>
-    <VBox layoutY="237.0" spacing="5.0">
-        <Separator prefWidth="200.0"/>
-        <GridPane alignment="CENTER" maxHeight="-Infinity" prefHeight="140.0" stylesheets="@key_style.css">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+    <top>
+        <BorderPane BorderPane.alignment="CENTER">
+            <right>
+                <TitledPane collapsible="false" maxHeight="235.0" styleClass="player-container" text="Estado Jugador"
+                            BorderPane.alignment="CENTER">
+                    <content>
+                        <ScrollPane fx:id="pStatusContainer" prefHeight="200.0" prefWidth="200.0"/>
+                    </content>
+                </TitledPane>
+            </right>
+            <center>
+                <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="235.0" maxWidth="1.7976931348623157E308"
+                            BorderPane.alignment="CENTER">
+                    <content>
+                        <FlowPane fx:id="wordContainer" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308"/>
+                    </content>
+                </ScrollPane>
+            </center>
+        </BorderPane>
+    </top>
+    <bottom>
+        <VBox spacing="5.0" BorderPane.alignment="CENTER">
+            <Separator prefWidth="200.0"/>
+            <GridPane fx:id="keyboard" alignment="CENTER" maxHeight="-Infinity" prefHeight="140.0"
+                      styleClass="key-container" stylesheets="@key_style.css">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
 
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
-                                vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="Q" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                        GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="E" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="R" GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="T" GridPane.columnIndex="4" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="Y" GridPane.columnIndex="5" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="U" GridPane.columnIndex="6" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="I" GridPane.columnIndex="7" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="O" GridPane.columnIndex="8" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="P" GridPane.columnIndex="9" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="&lt;-" GridPane.columnIndex="10" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="A" GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="S" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="D" GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="F" GridPane.columnIndex="4" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="G" GridPane.columnIndex="5" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="H" GridPane.columnIndex="6" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="J" GridPane.columnIndex="7" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="K" GridPane.columnIndex="8" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="L" GridPane.columnIndex="9" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="Z" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="X" GridPane.columnIndex="3" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="C" GridPane.columnIndex="4" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="B" GridPane.columnIndex="6" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="V" GridPane.columnIndex="5" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="N" GridPane.columnIndex="7" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="M" GridPane.columnIndex="8" GridPane.halignment="CENTER"
-                        GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
-                        GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
-                        styleClass="key" text="Espacio" GridPane.columnIndex="4" GridPane.columnSpan="3"
-                        GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
-                        GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-                    </GridPane.margin>
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-                    </padding>
-                </Button>
-            </children>
-        </GridPane>
-    </VBox>
-</AnchorPane>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
+                                    vgrow="SOMETIMES"/>
+                    <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
+                                    vgrow="SOMETIMES"/>
+                    <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
+                                    vgrow="SOMETIMES"/>
+                    <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0"
+                                    vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="Q" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                            GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="E" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="R" GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="T" GridPane.columnIndex="4" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="Y" GridPane.columnIndex="5" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="U" GridPane.columnIndex="6" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="I" GridPane.columnIndex="7" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="O" GridPane.columnIndex="8" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="P" GridPane.columnIndex="9" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button id="delete-button" alignment="CENTER" contentDisplay="CENTER"
+                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                            onAction="#onKeyActioned" styleClass="key" text="&lt;-" GridPane.columnIndex="10"
+                            GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="A" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="S" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="D" GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="F" GridPane.columnIndex="4" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="G" GridPane.columnIndex="5" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="H" GridPane.columnIndex="6" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="J" GridPane.columnIndex="7" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="K" GridPane.columnIndex="8" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="L" GridPane.columnIndex="9" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="Z" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="X" GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="C" GridPane.columnIndex="4" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="B" GridPane.columnIndex="6" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="V" GridPane.columnIndex="5" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="N" GridPane.columnIndex="7" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="M" GridPane.columnIndex="8" GridPane.halignment="CENTER"
+                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                            GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned"
+                            styleClass="key" text="Espacio" GridPane.columnIndex="4" GridPane.columnSpan="3"
+                            GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
+                            GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                        </GridPane.margin>
+                        <font>
+                            <Font size="18.0"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        </padding>
+                    </Button>
+                </children>
+            </GridPane>
+            <BorderPane>
+                <center>
+                    <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+                        <children>
+                            <Circle fx:id="statusCircle" fill="#ff1f1f" radius="5.0" stroke="TRANSPARENT"
+                                    strokeType="INSIDE"/>
+                        </children>
+                        <padding>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        </padding>
+                    </HBox>
+                </center>
+                <left>
+                    <HBox alignment="CENTER_LEFT" spacing="30.0" BorderPane.alignment="CENTER">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="2.0">
+                                <children>
+                                    <Label styleClass="info-label" text="Ip: "/>
+                                    <Label fx:id="lblHost" text="---------"/>
+                                </children>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="3.0">
+                                <children>
+                                    <Label styleClass="info-label" text="Puerto:"/>
+                                    <Label fx:id="lblPort" text="------"/>
+                                </children>
+                            </HBox>
+                        </children>
+                        <BorderPane.margin>
+                            <Insets left="10.0"/>
+                        </BorderPane.margin>
+                    </HBox>
+                </left>
+                <right>
+                    <ButtonBar styleClass="commander" BorderPane.alignment="CENTER">
+                        <buttons>
+                            <Button id="start-button" mnemonicParsing="false" styleClass="styled-button"
+                                    text="Empezar"/>
+                            <Button id="cancel-button" maxHeight="-Infinity" mnemonicParsing="false"
+                                    styleClass="styled-button" text="Cancelar Juego"/>
+                            <Button id="exit-button" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
+                                    text="Salir"/>
+                        </buttons>
+                        <padding>
+                            <Insets bottom="3.0" right="10.0" top="5.0"/>
+                        </padding>
+                    </ButtonBar>
+                </right>
+            </BorderPane>
+        </VBox>
+    </bottom>
+</BorderPane>

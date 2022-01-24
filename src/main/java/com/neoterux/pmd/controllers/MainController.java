@@ -3,6 +3,7 @@ package com.neoterux.pmd.controllers;
 import com.neoterux.pmd.utils.JfxUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,8 +28,12 @@ public final class MainController implements Initializable {
         a.setTitle("Debug Error");
         try {
             Parent sparent = JfxUtils.loadFxml("server_selection_window");
-            Scene selectionScene = new Scene(sparent);
+            Scene selectionScene = new Scene(sparent, 300, 200);
             selectionWindow = new Stage();
+            selectionWindow.setMinWidth(300);
+            selectionWindow.setMinHeight(200.0);
+            selectionWindow.setMaxWidth(300.0);
+            selectionWindow.setMaxHeight(275.0);
             selectionWindow.setScene(selectionScene);
             selectionWindow.initOwner(window);
             selectionWindow.initModality(Modality.WINDOW_MODAL);
@@ -45,18 +50,25 @@ public final class MainController implements Initializable {
     }
     
     @FXML
-    void joinGame (ActionEvent event) throws IOException, NullPointerException {
+    void newGame (ActionEvent event) throws IOException, NullPointerException {
+        FXMLLoader loader = JfxUtils.getLoaderOf("owner_window.fxml");
         Stage rootWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(JfxUtils.loadFxml("owner_window"));
+        Scene scene = new Scene(loader.load(), 900, 400);
         Stage nwindow = new Stage();
+        OwnerWindowController controller = loader.getController();
+        nwindow.setOnShown(controller::onWindowLoaded);
         nwindow.setScene(scene);
         nwindow.initOwner(rootWindow);
+        nwindow.setMinWidth(850.0);
+        nwindow.setHeight(475);
+        nwindow.setMinHeight(475);
+        nwindow.setMaxHeight(500);
         nwindow.initModality(Modality.WINDOW_MODAL);
         nwindow.show();
     }
-
+    
     @FXML
-    void newGame(ActionEvent event) {
+    void joinGame (ActionEvent event) {
         selectionWindow.show();
     }
     

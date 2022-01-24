@@ -12,8 +12,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class ServerManager implements Runnable {
-
+public final class ServerManager {
+    
     /**
      * The looger of this class
      */
@@ -30,6 +30,7 @@ public final class ServerManager implements Runnable {
      * The server manager that handle
      */
     private volatile static ServerManager manager;
+    private static Thread serverThread;
     /**
      * This map would contains the images bytes.
      * Always would contain 24 images due is one image for each letter
@@ -46,7 +47,7 @@ public final class ServerManager implements Runnable {
      *
      * @return the server manager of the client
      */
-    public static ServerManager getInstance() {
+    public static ServerManager getInstance () {
         if (manager == null) {
             logger.info("Server manager is initalizing...");
             manager = new ServerManager();
@@ -54,22 +55,50 @@ public final class ServerManager implements Runnable {
         }
         return manager;
     }
-
-
+    
+    public static void closeInstances () {
+        if (serverThread != null)
+            serverThread.interrupt();
+        Server at = getInstance().attachedServer;
+        if (at != null) {
+            at.shutdown();
+        }
+    }
+    
+    
     /**
      * Would
      */
-    void initalize() {
+    void initalize () {
         loadImages(true);
-        logger.info("");
+        logger.info("images loaded");
+        configureServer();
     }
-
+    
+    /**
+     * Configures the server to accept new gamers
+     *
+     * @return false if the server has an error at starting.
+     */
+    public boolean configureServer () {
+        closeInstances();
+        try {
+            attachedServer = new Server();
+            serverThread = new Thread(attachedServer);
+            serverThread.start();
+        } catch (RuntimeException rte) {
+            logger.error("An error ocurred while starting server", rte);
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * This method would reload all the images without lookup for running servers
      *
      * @return true if nothing failed
      */
-    public boolean forceReload() {
+    public boolean forceReload () {
         try {
             loadImages(false);
         } catch (RuntimeException rte) { // Catch any exception
@@ -98,20 +127,22 @@ public final class ServerManager implements Runnable {
                     logger.error("Error while reading file " + file.getName() + ": ", ioe);
                 }
     }
-
-    boolean lookupForRunningServers() {
+    
+    boolean lookupForRunningServers () {
         return false;
     }
-
-
-    boolean joinToServer() {
-
+    
+    
+    boolean joinToServer () {
+        
         return false;
     }
-
-
-    @Override
-    public void run() {
-
+    
+    public int getPort () {
+        if (attachedServer == null) {
+            return -1;
+        }
+        return this.attachedServer.getPort();
     }
+    
 }

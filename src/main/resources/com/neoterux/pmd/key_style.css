@@ -1,3 +1,6 @@
+@font-face {
+    src: url('styles/fonts/FiraCode_Bold_NF.otf');
+}
 .grid-pane > key {
     -fx-font-weight: bold;
     -fx-max-height: 30px;
@@ -5,13 +8,21 @@
 }
 
 .key {
+    -fx-font-family: "FiraCode_Bold_NF";
     -fx-font-weight: bold;
     -fx-font-size: 19px;
+    -fx-background-color: #eae9e9;
+    -fx-background-radius: 5px;
 }
 
-.key :hover {
-    -fx-font-size: 19px;
+.key:pressed {
+    -fx-background-color: #646464;
 }
+
+/*.key :hover {*/
+/*    -fx-font-size: 19px;*/
+/*}*/
+
 
 .imageview {
     -fx-border-color: black;

@@ -1,6 +1,8 @@
 package com.neoterux.server.api;
 
 import com.neoterux.server.api.exceptions.ServerRunningException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +27,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 final class Server implements Runnable {
     
+    public static final ObservableMap<String, char[]> images = FXCollections.observableHashMap();
     /**
      * The logger for the Server class
      */
     private static final Logger log = LoggerFactory.getLogger(Server.class);
-    
     private static final String LOCALHOST = "127.0.0.1";
-    
     private static final int POOL_SIZE = 5;
     private static final ThreadPoolExecutor tpool = (ThreadPoolExecutor) Executors.newFixedThreadPool(POOL_SIZE);
     /**
@@ -52,7 +53,7 @@ final class Server implements Runnable {
      */
     private boolean isRunning = false;
     
-    private Server () {
+    Server () {
         connectedClients = new ArrayList<>();
         try {
             this.socket = new ServerSocket(0);
@@ -84,14 +85,22 @@ final class Server implements Runnable {
      */
     @Override
     public void run () {
-        while (isRunning) {
+        log.info("Starting server at port: {}", socket.getLocalPort());
+        while (true) {
+            if (socket.isClosed()) {
+                log.info("Server closed");
+                break;
+            }
             try {
                 Socket clnsock = socket.accept();
                 boolean isLocal = clnsock.getInetAddress().getHostName().equals(LOCALHOST);
                 boolean ownerExists = connectedClients.stream().anyMatch(Client::isOwner);
                 connectedClients.add(new Client(clnsock, isLocal && !ownerExists));
+            } catch (SocketException se) {
+            
             } catch (IOException ioe) {
-                log.error("Error ");
+                log.error("Error while reading Sockets", ioe);
+                break;
             }
             
         }

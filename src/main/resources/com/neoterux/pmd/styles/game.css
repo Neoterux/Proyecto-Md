@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Fira Code NF';
+    src: url('fonts/FiraCode_Bold_NF.otf');
+}
+
+.player-container {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "CaskaydiaCove NF", monospace;
+}
+
+
+.player-container > .tiled-pane {
+
+}
+
+.commander .button {
+    -fx-min-height: 27px;
+    -fx-border-radius: 4px;
+    -fx-border-width: 2px;
+    -fx-background-radius: 4px;
+}
+
+.text-holder {
+    -fx-font-family: "Fira Code NF";
+}
+
+.commander .styled-button {
+    -fx-border-style: solid;
+    -fx-font-family: "Fira Code NF", monospace;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#start-button {
+    -fx-background-color: #34b449;
+    -fx-border-color: #258137;
+
+}
+
+#cancel-button {
+    -fx-border-color: #c02727;
+    -fx-background-color: #ff5555;
+}
