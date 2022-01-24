@@ -2,17 +2,7 @@ package com.neoterux.pmd.model;
 
 import java.io.Serializable;
 
-public final class Game implements Serializable {
-    
-    private final String name;
-    private final String hostname;
-    
-    
-    public Game (String name, String hostname) {
-        this.name = name;
-        this.hostname = hostname;
-    }
-    
+public record Game(String name, String hostname) implements Serializable {
     /**
      * @return true if the query with the server goes well.
      */

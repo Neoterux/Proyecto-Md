@@ -1,0 +1,23 @@
+.grid-pane > key {
+    -fx-font-weight: bold;
+    -fx-max-height: 30px;
+    -fx-background-color: #aaaaaa;
+}
+
+.key {
+    -fx-font-weight: bold;
+    -fx-font-size: 19px;
+}
+
+.key :hover {
+    -fx-font-size: 19px;
+}
+
+.imageview {
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+}
+
+.shape {
+
+}

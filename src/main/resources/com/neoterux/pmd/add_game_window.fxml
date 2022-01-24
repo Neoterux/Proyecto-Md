@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="com.neoterux.pmd.controllers.AddGameController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<TitledPane xmlns:fx="http://javafx.com/fxml/1" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="335.0" text="Servidor"
+            xmlns="http://javafx.com/javafx/16" fx:controller="com.neoterux.pmd.controllers.AddGameController">
+    <content>
+        <VBox spacing="3.0">
+            <children>
+                <Label text="Nombre"/>
+                <TextField fx:id="txtName" promptText="Un servidor mas"/>
+                <Label text="Ip"/>
+                <TextField fx:id="txtHostname" promptText="127.0.0.1"/>
+                <Label text="Puerto"/>
+                <TextField fx:id="txtPort" promptText="Puerto [1-65535]"/>
+                <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+                        <Button mnemonicParsing="false" onAction="#accept" text="Aceptar"/>
+                        <Button mnemonicParsing="false" onAction="#close" text="Cancelar"/>
+                    </buttons>
+                    <VBox.margin>
+                        <Insets top="3.0"/>
+                    </VBox.margin>
+                </ButtonBar>
+            </children>
+        </VBox>
+    </content>
+</TitledPane>
