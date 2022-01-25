@@ -9,6 +9,7 @@ module project.md {
     requires logback.classic;
     requires logback.core;
     requires org.slf4j;
+    requires org.apache.commons.lang3;
 
     opens com.neoterux.pmd;
     opens com.neoterux.server.api;
