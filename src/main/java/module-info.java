@@ -17,5 +17,7 @@ module project.md {
 
     exports com.neoterux.pmd to javafx.fxml, javafx.controls;
     exports com.neoterux.pmd.controllers to javafx.controls, javafx.fxml;
+    exports com.neoterux.pmd.components to javafx.controls;
+    exports com.neoterux.pmd.model;
     exports com.neoterux.server.api;
 }
