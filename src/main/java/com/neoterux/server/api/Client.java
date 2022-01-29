@@ -45,7 +45,9 @@ public class Client {
     /**
      * The stream of input bytes form the socket
      */
-    private BufferedReader input;
+//    private BufferedReader input;
+
+    private BufferedInputStream inputStream;
     
     /**
      * The stream of output bytes to the socket
@@ -92,11 +94,10 @@ public class Client {
     
     private void configureStreams (Socket sck) {
         try {
-            this.input = new BufferedReader(new InputStreamReader(sck.getInputStream()), BUFFER_SIZE);
+            this.inputStream = new BufferedInputStream(sck.getInputStream(), BUFFER_SIZE);
             this.output = new BufferedWriter(new OutputStreamWriter(sck.getOutputStream(), StandardCharsets.UTF_8),
                                              BUFFER_SIZE
             );
-//            output = new PrintWriter(new OutputStreamWriter(sck.getOutputStream(), StandardCharsets.UTF_8), true);
         } catch (IOException ioe) {
             log.error(String.format("[%s] IOException while configuring streams", getHostname()), ioe);
         }
@@ -118,12 +119,19 @@ public class Client {
         return isOwner;
     }
     
+    private String readline () throws IOException {
+        StringBuilder str = new StringBuilder();
+        char c;
+        while ((c = (char) this.inputStream.read()) != '\n') {
+            str.append(c);
+        }
+        return str.toString();
+    }
+    
     public String awaitCommand () throws EOFException {
         try {
             log.debug("waiting command...");
-            String cmd = input.readLine();
-            if (cmd == null)
-                return null;
+            String cmd = readline();
             if (onForceQuitListener != null && cmd.equalsIgnoreCase("$force-close$")) {
                 log.warn("Force quit executed");
                 onForceQuitListener.run();
@@ -141,10 +149,43 @@ public class Client {
         return null;
     }
     
-    public void getBytes (int size) {
+    /**
+     * Reads a block of bytes from the socket, with a max size of {@literal size}.
+     *
+     * @param size the max size of the bytes block
+     *
+     * @return the byte block read from the socket
+     */
+    public byte[] getBytes (int size) {
+        log.debug("Reading bytes [{}]", size);
+        byte[] buffer = new byte[size];
+        try {
+            int res = this.inputStream.read(buffer, 0, size);
+            if (res < 0) {
+                log.error("Cannot receive all bytes");
+            }
+        } catch (IOException ioe) {
+            log.error("Error while reading bytes", ioe);
+            return new byte[0];
+        }
+        return buffer;
     }
     
+    /**
+     * Read an integer from the socket.
+     *
+     * @return an int from the socket
+     *
+     * @throws NumberFormatException if the socket doesn't contain an integer
+     * @throws IOException           If there an error while reading
+     */
+    public int awaitInt () throws NumberFormatException, IOException {
+        return Integer.parseInt(awaitCommand());
+    }
+    
+    @SuppressWarnings ("UnusedReturnValue")
     public boolean sendCommand (String cmd) {
+        log.debug("Sending command: {}", cmd);
         try {
             this.output.write(cmd);
             this.output.newLine();
@@ -157,15 +198,13 @@ public class Client {
             return false;
         }
         return true;
-//        this.output.println(cmd);
-//        this.output.flush();
     }
     
     public void close () {
         try {
             sendCommand("unattached");
             this.output.close();
-            this.input.close();
+            this.inputStream.close();
             this.connectionSocket.close();
         } catch (IOException ioe) {
             log.error("Error while closing client", ioe);
@@ -175,9 +214,9 @@ public class Client {
     @Override
     public String toString () {
         return "Client{" +
-               "addr=" + connectionSocket.getInetAddress() +
+               "address=" + connectionSocket.getInetAddress() +
                ", port=" + connectionSocket.getPort() +
-               ", localport=" + connectionSocket.getLocalPort() +
+               ", local-port=" + connectionSocket.getLocalPort() +
                ", isOwner=" + isOwner +
                "}";
     }

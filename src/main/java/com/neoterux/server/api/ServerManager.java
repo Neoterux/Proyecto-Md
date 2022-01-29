@@ -6,12 +6,20 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * <h1>Server Manager</h1>
+ * This class shadow the local implementation of the server to the
+ * Owner of a game room.
+ *
+ * @author neoterux
+ * @apiNote May be removed due, no is more needed for server management.
+ * @see Server
+ */
+@Deprecated
+@SuppressWarnings ("ALL")
 public final class ServerManager {
     
     /**
@@ -32,16 +40,11 @@ public final class ServerManager {
     private volatile static ServerManager manager;
     private static Thread serverThread;
     /**
-     * This map would contains the images bytes.
-     * Always would contain 24 images due is one image for each letter
-     */
-    private final Map<String, byte[]> keyMap = new HashMap<>();
-    /**
      * The client server that handles the new game
      */
     private Server attachedServer;
-    private Socket connection;
-
+    
+    
     /**
      * Get the instance of the server Manager.
      *
@@ -49,7 +52,7 @@ public final class ServerManager {
      */
     public static ServerManager getInstance () {
         if (manager == null) {
-            logger.info("Server manager is initalizing...");
+            logger.info("Server manager is initializing...");
             manager = new ServerManager();
             manager.initalize();
         }
@@ -84,7 +87,7 @@ public final class ServerManager {
         closeInstances();
         try {
             attachedServer = new Server();
-            serverThread = new Thread(attachedServer);
+            serverThread = new Thread(attachedServer, "Server");
             serverThread.start();
         } catch (RuntimeException rte) {
             logger.error("An error ocurred while starting server", rte);
@@ -106,7 +109,7 @@ public final class ServerManager {
         }
         return true;
     }
-
+    
     private void loadImages (boolean lookup) {
         if (lookup && lookupForRunningServers())
             return;
@@ -122,7 +125,8 @@ public final class ServerManager {
             if (FileUtils.hasExtension(file, IMG_EXTS))
                 try {
                     String a = file.getName().split("\\.")[0].toLowerCase();
-                    keyMap.put(a, Files.readAllBytes(file.toPath()));
+                    Server.images.put(a.trim().toUpperCase(), Files.readAllBytes(file.toPath()));
+//                    keyMap.put(a, Files.readAllBytes(file.toPath()));
                 } catch (IOException ioe) {
                     logger.error("Error while reading file " + file.getName() + ": ", ioe);
                 }
@@ -133,16 +137,21 @@ public final class ServerManager {
     }
     
     
-    boolean joinToServer () {
-        
-        return false;
-    }
-    
     public int getPort () {
         if (attachedServer == null) {
             return -1;
         }
         return this.attachedServer.getPort();
+    }
+    
+    
+    public Client localClient () {
+        try {
+            return Client.connectTo("127.0.0.1", attachedServer.getPort());
+        } catch (IOException ioe) {
+            logger.error("Cannot connect to server", ioe);
+            return null;
+        }
     }
     
 }
