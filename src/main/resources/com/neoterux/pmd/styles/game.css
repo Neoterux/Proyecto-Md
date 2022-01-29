@@ -3,10 +3,27 @@
     src: url('fonts/FiraCode_Bold_NF.otf');
 }
 
+.life-tag {
+    -fx-font-weight: bold, italic;
+}
+
 .player-container {
     -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-font-family: "CaskaydiaCove NF", monospace;
+}
+
+.game-area .container {
+    -fx-border-width: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: black;
+    -fx-border-insets: 5px;
+}
+
+.game-area .title {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-color: #f1f1f1;
 }
 
 

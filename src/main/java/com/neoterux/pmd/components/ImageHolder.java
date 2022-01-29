@@ -13,9 +13,11 @@ public non-sealed class ImageHolder extends WordHolder<ImageView> {
      * @param codedImage the coded Image
      */
     public ImageHolder (byte[] codedImage) {
-        this(new ImageView());
-        Image img = new Image(new ByteArrayInputStream(codedImage));
-        getGraphic().setImage(img);
+        this(new Image(new ByteArrayInputStream(codedImage)));
+    }
+    
+    public ImageHolder (Image image) {
+        this(new ImageView(image));
     }
     
     protected ImageHolder (ImageView graphic) {

@@ -1,10 +1,22 @@
 @font-face {
     src: url('styles/fonts/FiraCode_Bold_NF.otf');
 }
+
 .grid-pane > key {
     -fx-font-weight: bold;
     -fx-max-height: 30px;
     -fx-background-color: #aaaaaa;
+}
+
+.life-container {
+    -fx-border-color: #1b5b26;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+    -fx-border-insets: 2px;
+}
+
+.image-button {
+    -fx-text-fill: transparent;
 }
 
 .key {

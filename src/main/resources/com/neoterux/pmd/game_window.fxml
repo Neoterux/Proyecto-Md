@@ -1,62 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="329.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/17"
+<?import java.lang.*?>
+<?import java.net.URL?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16"
             fx:controller="com.neoterux.pmd.controllers.GameWindowController">
-   <children>
-      <BorderPane maxHeight="-Infinity" prefWidth="844.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                  AnchorPane.topAnchor="0.0">
-         <right>
-            <TitledPane text="Estado Jugador" BorderPane.alignment="CENTER">
-               <content>
-                  <StackPane prefHeight="150.0" prefWidth="200.0"/>
-               </content>
-            </TitledPane>
-         </right>
-         <center>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="lblWord" graphicTextGap="10.0" text="TEST WORD" textAlignment="CENTER" underline="true"
-                         wrapText="true" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0"/>
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-         </center>
-      </BorderPane>
-      <Separator layoutY="181.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-      <GridPane alignment="CENTER" layoutY="189.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="140.0"
-                stylesheets="@key_style.css">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
+   <center>
+      <StackPane alignment="TOP_LEFT" styleClass="game-area" BorderPane.alignment="TOP_LEFT">
+         <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" prefHeight="210.0" vbarPolicy="NEVER"
+                     StackPane.alignment="CENTER_LEFT">
+            <StackPane.margin>
+               <Insets/>
+            </StackPane.margin>
+            <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="5.0" maxHeight="-Infinity"
+                      maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="200.0" prefWidth="200.0"
+                      styleClass="container">
+               <padding>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
+               </padding>
+               <HBox fx:id="wordContainer" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                     prefHeight="150.0" spacing="5.0">
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                  </padding>
+               </HBox>
+            </FlowPane>
+         </ScrollPane>
+         <Label styleClass="title" text="área de juego">
+            <StackPane.margin>
+               <Insets left="20.0"/>
+            </StackPane.margin>
+         </Label>
+      </StackPane>
+   </center>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <Separator prefWidth="200.0"/>
+         <GridPane fx:id="keyboard" alignment="CENTER" maxHeight="-Infinity" minHeight="350.0" prefHeight="140.0"
+                   stylesheets="@key_style.css">
+            <columnConstraints>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
 
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-         </rowConstraints>
-         <children>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                  minWidth="100.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" percentHeight="33.0"
+                               prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS"/>
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" percentHeight="33.0"
+                               prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS"/>
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" percentHeight="33.0"
+                               prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS"/>
+            </rowConstraints>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="Q" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="Q"
+                    GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
                     GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -67,10 +85,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="W"
+                    GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -81,10 +103,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="E" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="E"
+                    GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -95,10 +121,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="R" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="R"
+                    GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -109,10 +139,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="T" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="T"
+                    GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -123,10 +157,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="Y" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="Y"
+                    GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -137,10 +175,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="U" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="U"
+                    GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -151,10 +193,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="I" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="I"
+                    GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -165,10 +211,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="O" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="O"
+                    GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -179,10 +229,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="P" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="P"
+                    GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -193,10 +247,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="&lt;-" GridPane.columnIndex="10" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="A"
+                    GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
                     GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -207,10 +265,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="A" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="S"
+                    GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -221,10 +283,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="S" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="D"
+                    GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -235,10 +301,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="D" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="F"
+                    GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -249,10 +319,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="F" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="G"
+                    GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -263,10 +337,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="G" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="H"
+                    GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -277,10 +355,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="H" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="J"
+                    GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -291,10 +373,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="J" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="K"
+                    GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -305,10 +391,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="K" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="L"
+                    GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -319,10 +409,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="L" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="Z"
+                    GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -333,10 +427,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="Z" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="X"
+                    GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -347,10 +445,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="X" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="C"
+                    GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -361,10 +463,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="C" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="B"
+                    GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -375,10 +481,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="B" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="V"
+                    GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -389,10 +499,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="V" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="N"
+                    GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -403,10 +517,14 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="N" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyClicked" text="M"
+                    GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                     GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
@@ -417,36 +535,37 @@
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
                </padding>
+               <styleClass>
+                  <String fx:value="key"/>
+                  <String fx:value="image-button"/>
+               </styleClass>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="M" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                    GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <GridPane.margin>
-                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-               </GridPane.margin>
-               <font>
-                  <Font size="18.0"/>
-               </font>
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-               </padding>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onKeyActioned" styleClass="key"
-                    text="Espacio" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER"
-                    GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <GridPane.margin>
-                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
-               </GridPane.margin>
-               <font>
-                  <Font size="18.0"/>
-               </font>
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-               </padding>
-            </Button>
-         </children>
-      </GridPane>
-   </children>
-</AnchorPane>
+         </GridPane>
+         <HBox fx:id="statusBar" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity"
+               prefHeight="20.0" prefWidth="200.0">
+            <Label text="Esperando al administrador...."/>
+            <ProgressIndicator maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0"/>
+         </HBox>
+      </VBox>
+   </bottom>
+   <top>
+      <HBox fx:id="lifeBox" alignment="CENTER_LEFT" maxHeight="35.0" minHeight="40.0" spacing="30.0"
+            styleClass="life-container" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+         </padding>
+         <BorderPane.margin>
+            <Insets top="5.0"/>
+         </BorderPane.margin>
+         <Label styleClass="life-tag" text="Vidas:">
+            <font>
+               <Font size="17.0"/>
+            </font>
+         </Label>
+      </HBox>
+   </top>
+   <stylesheets>
+      <URL value="@key_style.css"/>
+      <URL value="@styles/game.css"/>
+   </stylesheets>
+</BorderPane>
