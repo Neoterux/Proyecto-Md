@@ -2,10 +2,10 @@ package com.neoterux.server.api;
 
 import com.neoterux.server.api.exceptions.ServerRunningException;
 import com.neoterux.server.api.utils.ConnectionWrapper;
+import com.neoterux.server.api.utils.ThreadFactoryBuilder;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,16 +57,15 @@ final class Server implements Runnable {
     /**
      * The pool of threads that would handle the clients connections
      */
-    private static final ThreadPoolExecutor tpool = (ThreadPoolExecutor) Executors.newFixedThreadPool(POOL_SIZE);
+    private static final ThreadPoolExecutor tpool = (ThreadPoolExecutor) Executors.newFixedThreadPool(POOL_SIZE,
+                                                                                                      new ThreadFactoryBuilder("client-pool-%d")
+                                                                                                     );
     
     /**
      * The instance of the current server.
      */
     volatile static private Server instance;
     
-    static {
-        tpool.setThreadFactory(new BasicThreadFactory.Builder().namingPattern("ServerClientPool-%d").build());
-    }
     
     private final Deque<ConnectionWrapper> connectionList;
 //    private final ObjectProperty<Socket> ownerSocketProperty;
