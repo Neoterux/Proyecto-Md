@@ -7,6 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.function.Consumer;
+
 public final class AddGameController {
     
     private static final Alert errAlert = new Alert(Alert.AlertType.ERROR);
@@ -33,13 +35,20 @@ public final class AddGameController {
     @FXML
     public TextField txtPort;
     
+    public Consumer<Game> onGameAdded;
+    
+    public void setOnGameAdded (Consumer<Game> onGameAdded) {
+        this.onGameAdded = onGameAdded;
+    }
+    
     /**
      * This method would apply/return changes to the root window.
      *
      * @param actionEvent the action event.
      */
     public void accept (ActionEvent actionEvent) {
-        errAlert.initOwner(txtPort.getScene().getWindow());
+//        if (!errAlert.isShowing())
+//            errAlert.initOwner(txtPort.getScene().getWindow());
         String name = txtName.getText();
         String hostname = txtHostname.getText();
         int port = -1;
@@ -53,8 +62,11 @@ public final class AddGameController {
             errAlert.setContentText("Datos incompletos, por favor rellenelos.");
             errAlert.show();
         } else {
-            Game game = new Game(name, String.format("%s:%s", hostname, port));
-            System.out.println(game);
+            Game game = new Game(name, hostname, port);
+            if (onGameAdded != null) {
+                onGameAdded.accept(game);
+            }
+            ((Stage) txtPort.getScene().getWindow()).close();
         }
     }
     

@@ -59,12 +59,15 @@ public final class MainController implements Initializable {
         nwindow.setOnShown(controller::onWindowLoaded);
         nwindow.setScene(scene);
         nwindow.initOwner(rootWindow);
+        nwindow.setOnCloseRequest(controller::onWindowClosed);
         nwindow.setMinWidth(850.0);
         nwindow.setHeight(475);
         nwindow.setMinHeight(475);
         nwindow.setMaxHeight(500);
         nwindow.initModality(Modality.WINDOW_MODAL);
-        nwindow.show();
+        rootWindow.hide();
+        nwindow.showAndWait();
+        rootWindow.show();
     }
     
     @FXML
