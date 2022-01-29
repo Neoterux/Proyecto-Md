@@ -43,11 +43,16 @@ public abstract sealed class WordHolder<G extends Node> extends VBox permits Ima
         configure();
         setPadding(new Insets(5));
         setAlignment(Pos.CENTER);
-        
+    
     }
     
+    @SuppressWarnings ("rawtypes")
     public static WordHolder emptyWordHolder () {
         return new EmptyHolder();
+    }
+    
+    public static <G extends Node> boolean isEmptyHolder (Node wh) {
+        return wh instanceof EmptyHolder;
     }
     
     public final G getGraphic () {
@@ -60,6 +65,11 @@ public abstract sealed class WordHolder<G extends Node> extends VBox permits Ima
     
     public final StringProperty getWordAssignProperty () {
         return this.wordAssignProperty;
+    }
+    
+    
+    public final String getAssignedWord () {
+        return this.wordAssignProperty.get();
     }
     
     public final ObjectProperty<Paint> getSubColorProperty () {

@@ -6,6 +6,7 @@ public non-sealed class TextHolder extends WordHolder<Label> {
     
     public TextHolder (String letter) {
         this(new Label(letter));
+        this.getWordAssignProperty().set(letter);
     }
     
     protected TextHolder (Label graphic) {

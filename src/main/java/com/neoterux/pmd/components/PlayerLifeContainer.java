@@ -8,7 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.function.Consumer;
 
 public final class PlayerLifeContainer extends TitledPane {
     
@@ -20,17 +22,19 @@ public final class PlayerLifeContainer extends TitledPane {
     
     private final FlowPane lifeContainer;
     
-    private final ArrayList<Shape> availableHearts;
+    private final Deque<Shape> availableHearts;
     
-    private final ArrayList<Shape> damagedHearts;
+    private final Deque<Shape> damagedHearts;
     
     private final IntegerProperty lifeCount;
     
+    private Consumer<Integer> onDamageListener;
+    
     public PlayerLifeContainer (String name) {
-        lifeCount = new SimpleIntegerProperty(HEART_COUNT);
-        lifeContainer = new FlowPane();
-        availableHearts = new ArrayList<>(HEART_COUNT);
-        damagedHearts = new ArrayList<>(HEART_COUNT);
+        this.lifeCount = new SimpleIntegerProperty(HEART_COUNT);
+        this.lifeContainer = new FlowPane();
+        this.availableHearts = new ArrayDeque<>(HEART_COUNT);
+        this.damagedHearts = new ArrayDeque<>(HEART_COUNT);
         this.setExpanded(true);
         this.setCollapsible(false);
         this.setText(name);
@@ -53,13 +57,35 @@ public final class PlayerLifeContainer extends TitledPane {
         return lifeCount.get();
     }
     
+    /**
+     * Set a new Damage listener that receive the new life after damage.
+     *
+     * @param listener the listener to set.
+     */
+    public void setOnDamageListener (Consumer<Integer> listener) {
+        this.onDamageListener = listener;
+    }
+    
+    private int getHeartCount () {
+        return this.availableHearts.size();
+    }
+    
     public IntegerProperty lifeCountProperty () {
         return this.lifeCount;
     }
     
+    /**
+     * Reduce the life into the container, and call the damage Listener.
+     *
+     * @return true if damage can be made.
+     */
+    @SuppressWarnings ("all")
     public boolean makeDamage () {
-        if (getLifeCount() > 0) {
-            Shape heart = availableHearts.remove(getLifeCount() - 1);
+        if (!this.availableHearts.isEmpty()) {
+            lifeCount.set(lifeCount.get() - 1);
+            if (onDamageListener != null)
+                onDamageListener.accept(lifeCount.get());
+            Shape heart = availableHearts.pollLast();
             heart.setFill(Color.GRAY);
             damagedHearts.add(heart);
             return true;
@@ -72,8 +98,8 @@ public final class PlayerLifeContainer extends TitledPane {
     }
     
     public void reset () {
-        for (int i = 0; !damagedHearts.isEmpty(); ) {
-            Shape s = damagedHearts.remove(i);
+        while (!damagedHearts.isEmpty()) {
+            Shape s = damagedHearts.poll();
             s.setFill(Color.RED);
             availableHearts.add(s);
         }
