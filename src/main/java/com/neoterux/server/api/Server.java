@@ -16,9 +16,9 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <h1>Server</h1>
@@ -57,8 +57,10 @@ final class Server implements Runnable {
      * The pool of threads that would handle the clients connections
      */
     private static final ThreadPoolExecutor tpool = (ThreadPoolExecutor) Executors.newFixedThreadPool(POOL_SIZE,
-                                                                                                      new ThreadFactoryBuilder("client-pool-%d")
-                                                                                                     );
+                                                                  new ThreadFactoryBuilder("client-pool-%d"));
+    
+    private static final ExecutorService watchdog = Executors.newSingleThreadExecutor(
+                                                                    new ThreadFactoryBuilder("server-watchdog"));
     
     /**
      * The instance of the current server.
@@ -71,14 +73,14 @@ final class Server implements Runnable {
     /**
      * The server socket to comunicate through games
      */
-    private ServerSocket socket;
+    private volatile ServerSocket serverSocket;
 
     /**
      * This parameter is only to determine if the server is running
      */
-    private boolean isRunning = false;
-    private Socket ownerSocket;
-    private ConnectionWrapper ownerWrapper;
+    private volatile boolean isRunning = false;
+    private volatile Socket ownerSocket;
+    private volatile ConnectionWrapper ownerWrapper;
     
     private volatile String targetString;
     
@@ -87,21 +89,18 @@ final class Server implements Runnable {
      */
     Server () {
         connectionList = new LinkedList<>();
-        reload();
         try {
             try {
-                this.socket = new ServerSocket(DEF_PORT);
+                this.serverSocket = new ServerSocket(DEF_PORT);
                 log.info("Successfully use the default port");
             } catch (IOException ioe) {
                 log.error("Cannot use default port, fallback to auto port");
-                this.socket = new ServerSocket(0);
+                this.serverSocket = new ServerSocket(0);
             }
-            log.info("Starting Servet at port: {}", socket.getLocalPort());
+            log.info("Starting Servet at port: {}", serverSocket.getLocalPort());
             reload();
-            isRunning = true;
-        } catch (SocketException se) {
-            log.error("Error while setting up lookup", se);
-        } catch (IOException ioe) {
+            isRunning = false;
+        }catch (IOException ioe) {
             log.error("Error while starting server socket", ioe);
         }
     }
@@ -127,18 +126,17 @@ final class Server implements Runnable {
     @SuppressWarnings ("SuspiciousMethodCalls")
     @Override
     public void run () {
-        log.info("Starting server at port: {}", socket.getLocalPort());
-        while (true) {
-            if (socket.isClosed()) {
-                log.info("Server closed");
-                tpool.shutdownNow();
-                break;
-            }
+        log.info("Starting server at port: {}", serverSocket.getLocalPort());
+        this.isRunning = true;
+        watchdog.submit(this::watchdogService);
+        while (isRunning) {
             try {
-                Socket connection = socket.accept();
-                if (ownerSocket == null) {
+                if (serverSocket.isClosed())
+                    log.debug("WTF bro this socket is closed {}", serverSocket);
+                Socket connection = serverSocket.accept();
+                log.info("registering to pool new connection");
+                if (ownerSocket == null)
                     ownerSocket = connection;
-                }
                 tpool.execute(() -> {
                     try {
                         this.attendClient(connection);
@@ -151,6 +149,8 @@ final class Server implements Runnable {
             } catch (SocketException se) {
                 if (se.getMessage().contains("Socket closed")) {
                     log.warn("Server is closed");
+                    this.isRunning = false;
+                    return;
                 } else {
                     log.error("Socket error", se);
                 }
@@ -160,6 +160,42 @@ final class Server implements Runnable {
                 break;
             }
         }
+    }
+    
+    private void sendCloseRequest() {
+        this.connectionList.forEach(conn -> {
+            try {
+                conn.writeLine("$force-close$");
+            } catch (IOException e) {
+                log.warn("Cannot send the close request to connection:", e);
+            }
+        });
+    }
+    
+    private void watchdogService() {
+        log.info("Attaching new Watchdog");
+        while(isRunning) {
+            if(ownerSocket == null){
+                sendCloseRequest();
+                log.info("Owner not defined or detached yet, waiting until new is registered");
+                while (ownerSocket == null) {
+                    Thread.onSpinWait();
+                } // Maybe need to replace this to something better
+                // FIXME: Find another solution to this while!!
+                log.info("Owner detected");
+            }
+            for (ConnectionWrapper connectionWrapper : this.connectionList) {
+                if (!connectionWrapper.getSocket().equals(ownerSocket) && !connectionWrapper.isAlive()){
+                    try {
+                        ownerWrapper.writeLine("remove");
+                        ownerWrapper.writeLine("id: " + connectionWrapper.getSocket().getPort());
+                    }catch (IOException ioe) {
+                        log.warn("Cannot notify to the owner a disconnection", ioe);
+                    }
+                }
+            }
+        }
+        log.info("Shutdown Watchdog");
     }
     
     public void attendClient (Socket sock) throws IOException {
@@ -291,8 +327,9 @@ final class Server implements Runnable {
             case "fetch-word" -> {
                 // Wait until the target string is set by the owner
                 log.debug("Client requested the word [isDefined: {}]", targetString != null);
-                //noinspection StatementWithEmptyBody
-                while (this.ownerSocket != null && this.targetString == null) ;
+                while (this.ownerSocket != null && this.targetString == null){
+                    Thread.onSpinWait();
+                }
                 log.debug("Target String unlocked");
                 sender.writeLine(this.targetString);
                 log.info("word sent to client [{}]", this.targetString);
@@ -320,10 +357,10 @@ final class Server implements Runnable {
     }
     
     public int getPort () {
-        if (this.socket == null)
+        if (this.serverSocket == null)
             return -1;
         else
-            return this.socket.getLocalPort();
+            return this.serverSocket.getLocalPort();
     }
     
     /**
@@ -334,19 +371,19 @@ final class Server implements Runnable {
      */
     @SuppressWarnings ("all")
     public boolean shutdown () {
-        if (this.socket == null)
+        if (this.serverSocket == null || !isRunning)
             return false;
         try {
             forceDisconnection();
-            socket.close();
-            tpool.shutdown();
-            tpool.awaitTermination(1, TimeUnit.SECONDS);
-            tpool.shutdownNow();
+            serverSocket.close();
+//            tpool.shutdown();
+//            tpool.awaitTermination(1, TimeUnit.SECONDS);
+//            tpool.shutdownNow();
             isRunning = false;
-        } catch (IOException | InterruptedException se) {
+        } catch (IOException se) {
             log.error("Error while trying to close socket", se);
         }
-        return socket.isClosed();
+        return serverSocket.isClosed();
     }
     
     private void forceDisconnection () {
