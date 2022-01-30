@@ -108,7 +108,7 @@ public class OwnerWindowController implements Initializable, Runnable {
     
     public void configureServer (Alert waitAlert) {
         try {
-            manager.forceReload();
+            manager.initalize();
             Platform.runLater(() -> {
                 lblHost.setText("127.0.0.1");
                 lblPort.setText(String.valueOf(manager.getPort()));
@@ -287,11 +287,13 @@ public class OwnerWindowController implements Initializable, Runnable {
     }
     
     private void closeAll () {
+        client.sendCommand("shutdown");
         client.close();
         decoderThread.interrupt();
     }
     
     public void exit (ActionEvent actionEvent) {
+        closeAll();
         ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).close();
     }
     
