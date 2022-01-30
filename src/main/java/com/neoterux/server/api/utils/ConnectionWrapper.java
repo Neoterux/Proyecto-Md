@@ -95,6 +95,10 @@ public final class ConnectionWrapper {
         return dout;
     }
     
+    public boolean isAlive() {
+        return this.getSocket().isConnected();
+    }
+    
     /**
      * Compare a given Socket or a Wrapper object.
      * If wrap the same connection.
