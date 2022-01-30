@@ -3,9 +3,37 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%d{HH:mm:ss} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} [%thread] [%highlight(%-5level)] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+    <appender name="SERVER_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>${user.home}/tgame-server.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] [%highlight(%-5level)] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="APP_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>${user.home}/tgame-runtime.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] [%highlight(%-5level)] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.neoterux.server.api.Server" level="DEBUG" additivity="false">
+        <appender-ref ref="SERVER_LOG"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.neoterux.server.api.utils" level="DEBUG" >
+        <appender-ref ref="SERVER_LOG"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="com.neoterux.pmd" level="DEBUG">
+        <appender-ref ref="APP_LOG"/>
+    </logger>
+    <logger name="com.neoterux.server.api.Client" level="DEBUG">
+        <appender-ref ref="APP_LOG"/>
+    </logger>
 
     <root level="debug">
         <appender-ref ref="STDOUT"/>
