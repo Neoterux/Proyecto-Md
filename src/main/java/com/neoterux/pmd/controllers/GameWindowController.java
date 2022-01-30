@@ -7,6 +7,8 @@ import com.neoterux.pmd.components.WordHolder;
 import com.neoterux.server.api.Client;
 import javafx.application.Platform;
 import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameWindowController implements Runnable {
     
@@ -42,8 +46,10 @@ public class GameWindowController implements Runnable {
     private final ObservableMap<String, Image> images;
     private final StringProperty name;
     private final StringProperty wordProperty;
+    private final ExecutorService e = Executors.newCachedThreadPool();
     private final Thread decoder;
     private final List<String> insertedLetter;
+    private final BooleanProperty gameReadyProperty;
     @FXML
     private HBox lifeBox;
     @FXML
@@ -55,6 +61,7 @@ public class GameWindowController implements Runnable {
     private GridPane keyboard;
     
     public GameWindowController (Client client) {
+        this.gameReadyProperty = new SimpleBooleanProperty();
         this.images = FXCollections.observableHashMap();
         this.insertedLetter = new ArrayList<>();
         this.wordProperty = new SimpleStringProperty("");
@@ -76,7 +83,6 @@ public class GameWindowController implements Runnable {
             
             if (this.lifeContainer.makeDamage())
                 log.debug("Damage taken!!!");
-//                onLooseGame();
         }
         if (wordContainer.getChildren().stream()
                          .noneMatch(it -> it instanceof TextHolder &&
@@ -189,16 +195,23 @@ public class GameWindowController implements Runnable {
         }
     }
     
+    public void configureStart() {
+        decoder.start();
+        scramble();
+        keyboard.setDisable(false);
+    }
+    
     public void onWindowShowed (WindowEvent event) {
-        keyboard.setDisable(true);
-        Stage window = (Stage) event.getSource();
-        window.titleProperty().bindBidirectional(name);
         Dialog<String> nameDialog = new Dialog<>();
         client.setOnForceQuitListener(() -> {
             nameDialog.setResult("");
             nameDialog.close();
             closeAll();
         });
+        keyboard.setDisable(true);
+        
+        Stage window = (Stage) event.getSource();
+        window.titleProperty().bindBidirectional(name);
         nameDialog.setTitle("Ingrese nombre de Jugador");
         nameDialog.initOwner(window);
         ButtonType acceptBtn = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
@@ -224,20 +237,25 @@ public class GameWindowController implements Runnable {
         parseImages();
         this.lifeContainer = new PlayerLifeContainer(this.name.get());
         this.lifeContainer.lifeCountProperty().addListener(this::onDamage);
+        this.gameReadyProperty.addListener((o, old, n) -> Platform.runLater(n ? this::configureStart : this::resetGame));
+        e.submit(() -> {
+            this.wordProperty.setValue(fetchWord());
+            this.gameReadyProperty.set(true);
+            log.debug("Word fetched from admin: '{}'", wordProperty.get());
+        });
         log.info("Fetching the word from server");
-        this.wordProperty.setValue(fetchWord());
         this.lifeBox.getChildren().add(lifeContainer.getLifeContainer());
-        log.debug("Word fetched from admin: '{}'", wordProperty.get());
-        decoder.start();
-        scramble();
-        keyboard.setDisable(false);
     }
     
     public void parseImages () {
         String input;
         log.info("Starting Receiving Images");
         try {
-            while ((input = client.awaitCommand()) != null && !input.equalsIgnoreCase("end-images")) {
+            while ((input = client.awaitCommand()) != null) {
+                if (input.trim().equalsIgnoreCase("end-images")) {
+                    log.info("Image rx ended!");
+                    break;
+                }
                 final int byteCount = Integer.parseInt(client.awaitCommand().split(":")[1]);
                 client.sendCommand("send:10240");// Send in block of 10Kb
                 int bytesReceived = 0;
@@ -292,14 +310,14 @@ public class GameWindowController implements Runnable {
     }
     
     
-    public void onKeyActioned (ActionEvent actionEvent) {
-    }
-    
     private void closeAll () {
+        log.warn("Closing an instance of Game");
         Platform.runLater(() -> {
             ((Stage) this.keyboard.getScene().getWindow()).close();
-            this.client.close();
-            this.decoder.interrupt();
+            if(!client.getConnectionSocket().isClosed())
+                this.client.close();
+                this.decoder.interrupt();
+                this.e.shutdownNow();
         });
     }
     
