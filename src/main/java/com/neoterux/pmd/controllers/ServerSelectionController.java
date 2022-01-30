@@ -47,11 +47,11 @@ public class ServerSelectionController implements Initializable {
             GameWindowController controller = new GameWindowController(client);
             loader.setControllerFactory(param -> controller);
             Scene sce = new Scene(loader.load());
-            window.setOnCloseRequest(controller::onWindowCloses);
+            window.setOnHidden(controller::onWindowCloses);
             window.setOnShown(controller::onWindowShowed);
             window.setScene(sce);
             root.getOwner().hide();
-            window.show();
+            window.showAndWait();
             ((Stage) root.getOwner()).show();
         } catch (IOException ioe) {
             Alert a = new Alert(Alert.AlertType.ERROR, "Cannot create new game, sorry");
