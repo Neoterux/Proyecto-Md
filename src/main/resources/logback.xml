@@ -7,15 +7,16 @@
         </encoder>
     </appender>
     <appender name="SERVER_LOG" class="ch.qos.logback.core.FileAppender">
-        <file>${user.home}/tgame-server.log</file>
+        <append>false</append>
+        <file>logs/tgame-server.log</file>
         <encoder>
-            <pattern>%d{HH:mm:ss} [%thread] [%highlight(%-5level)] %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
     <appender name="APP_LOG" class="ch.qos.logback.core.FileAppender">
         <file>${user.home}/tgame-runtime.log</file>
         <encoder>
-            <pattern>%d{HH:mm:ss} [%thread] [%highlight(%-5level)] %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
