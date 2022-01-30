@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -68,15 +67,12 @@ final class Server implements Runnable {
     
     
     private final Deque<ConnectionWrapper> connectionList;
-//    private final ObjectProperty<Socket> ownerSocketProperty;
+
     /**
      * The server socket to comunicate through games
      */
     private ServerSocket socket;
-    /**
-     * Sccket to allow the discovery.
-     */
-    private DatagramSocket lookupSocket;
+
     /**
      * This parameter is only to determine if the server is running
      */
@@ -90,8 +86,6 @@ final class Server implements Runnable {
      * Creates a new Server instance
      */
     Server () {
-//        this.ownerSocketProperty = new SimpleObjectProperty<>();
-//        ownerSocketProperty.addListener(this::ownerSocketChange);
         connectionList = new LinkedList<>();
         reload();
         try {
@@ -103,8 +97,6 @@ final class Server implements Runnable {
                 this.socket = new ServerSocket(0);
             }
             log.info("Starting Servet at port: {}", socket.getLocalPort());
-            this.lookupSocket = new DatagramSocket(socket.getLocalPort());
-            this.lookupSocket.setBroadcast(true);
             reload();
             isRunning = true;
         } catch (SocketException se) {
@@ -298,7 +290,7 @@ final class Server implements Runnable {
             }
             case "fetch-word" -> {
                 // Wait until the target string is set by the owner
-                log.debug("Client requested word: {}", targetString);
+                log.debug("Client requested the word [isDefined: {}]", targetString != null);
                 //noinspection StatementWithEmptyBody
                 while (this.ownerSocket != null && this.targetString == null) ;
                 log.debug("Target String unlocked");
@@ -347,7 +339,6 @@ final class Server implements Runnable {
         try {
             forceDisconnection();
             socket.close();
-            lookupSocket.close();
             tpool.shutdown();
             tpool.awaitTermination(1, TimeUnit.SECONDS);
             tpool.shutdownNow();
