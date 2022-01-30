@@ -54,7 +54,6 @@ public final class ServerManager {
         if (manager == null) {
             logger.info("Server manager is initializing...");
             manager = new ServerManager();
-            manager.initalize();
         }
         return manager;
     }
@@ -63,7 +62,7 @@ public final class ServerManager {
         if (serverThread != null)
             serverThread.interrupt();
         Server at = getInstance().attachedServer;
-        if (at != null) {
+        if (at != null && at.isRunning()) {
             at.shutdown();
         }
     }
@@ -72,7 +71,7 @@ public final class ServerManager {
     /**
      * Would
      */
-    void initalize () {
+    public void initalize () {
         loadImages(true);
         logger.info("images loaded");
         configureServer();
@@ -87,7 +86,7 @@ public final class ServerManager {
         closeInstances();
         try {
             attachedServer = new Server();
-            serverThread = new Thread(attachedServer, "Server");
+            serverThread = new Thread(attachedServer, "ServerThread");
             serverThread.start();
         } catch (RuntimeException rte) {
             logger.error("An error ocurred while starting server", rte);
@@ -124,8 +123,10 @@ public final class ServerManager {
         for (File file : tfiles)
             if (FileUtils.hasExtension(file, IMG_EXTS))
                 try {
-                    String a = file.getName().split("\\.")[0].toLowerCase();
-                    Server.images.put(a.trim().toUpperCase(), Files.readAllBytes(file.toPath()));
+                    String letterImg = file.getName().split("\\.")[0].trim().toUpperCase();
+                    if (Server.images.getOrDefault(letterImg, null) != null)
+                        Server.images.remove(letterImg);
+                    Server.images.put(letterImg, Files.readAllBytes(file.toPath()));
 //                    keyMap.put(a, Files.readAllBytes(file.toPath()));
                 } catch (IOException ioe) {
                     logger.error("Error while reading file " + file.getName() + ": ", ioe);
