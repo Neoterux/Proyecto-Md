@@ -105,14 +105,14 @@
                     <execution>
                         <id>mac</id>
                         <configuration>
-                            <icon>icons/icons.icns</icon>
+<!--                            <icon>icons/icons.icns</icon>-->
                         </configuration>
                     </execution>
                     <execution>
                         <id>win</id>
                         <configuration>
-                            <icon>icons/icon.ico</icon>
-                            <winMenu>true</winMenu>
+<!--                            <icon>icons/icon.ico</icon>-->
+<!--                            <winMenu>true</winMenu>-->
                         </configuration>
                     </execution>
                 </executions>
