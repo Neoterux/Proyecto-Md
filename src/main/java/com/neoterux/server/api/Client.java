@@ -46,6 +46,7 @@ public class Client {
      * The stream of input bytes form the socket
      */
 //    private BufferedReader input;
+    private static final String OS_SEPARATOR = System.getProperty("line.separator");
 
     private BufferedInputStream inputStream;
     
@@ -122,10 +123,15 @@ public class Client {
     private String readline () throws IOException {
         StringBuilder str = new StringBuilder();
         char c;
-        while ((c = (char) this.inputStream.read()) != '\n') {
+        do{
+            c = (char) this.inputStream.read();
+            if (c > 255)
+                log.warn("<readline> Maybe invalid character obtained {}", c);
             str.append(c);
-        }
-        return str.toString();
+        }while (this.inputStream.available() > 0);
+        String rawOut = str.toString();
+        log.debug("Readed line [{}]: {}",rawOut.length(), rawOut);
+        return rawOut.replace(OS_SEPARATOR, "");
     }
     
     public String awaitCommand () throws EOFException {
