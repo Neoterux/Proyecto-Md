@@ -121,13 +121,17 @@ public class Client {
     }
     
     private String readline () throws IOException {
-        StringBuilder str = new StringBuilder();
+        String str = "";
+//        StringBuilder str = new StringBuilder();
         char c;
         do{
             c = (char) this.inputStream.read();
             if (c > 255)
                 log.warn("<readline> Maybe invalid character obtained {}", c);
-            str.append(c);
+            str += String.valueOf(c);
+            if (str.contains(OS_SEPARATOR))
+                break;
+//            str.append(c);
         }while (this.inputStream.available() > 0);
         String rawOut = str.toString();
         log.debug("Readed line [{}]: {}",rawOut.length(), rawOut);
