@@ -6,7 +6,10 @@ import com.neoterux.server.api.ServerManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 import static com.neoterux.pmd.utils.JfxUtils.getLoaderOf;
 
@@ -31,18 +34,24 @@ public class MainApp extends Application {
     }
     
     @Override
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
         rootStage = primaryStage;
         try {
+            rootStage.getIcons().add(new Image(getClass().getResource("icon/icon_32.png").toExternalForm()));
+            rootStage.setTitle("Bienvenido al Juego");
             var loader = getLoaderOf("main_window.fxml");
             loader.setControllerFactory(param -> new MainController(primaryStage));
             Scene mainScene = new Scene(loader.load());
             primaryStage.setScene(mainScene);
             primaryStage.show();
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException | IOException npe) {
             System.out.println("This should not execute!!");
             npe.printStackTrace();
+        } catch (Exception e ){
+            System.out.println("Unknown exception");
+            e.printStackTrace();
         }
+        System.out.println("Start method end:");
     }
     
     @Override
