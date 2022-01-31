@@ -27,5 +27,6 @@ public non-sealed class ImageHolder extends WordHolder<ImageView> {
     @Override
     protected void configure () {
         getGraphic().fitHeightProperty().set(Consts.MIN_HEIGHT - Consts.RECT_HEIGHT);
+        getGraphic().fitWidthProperty().set(Consts.WIDTH);
     }
 }
