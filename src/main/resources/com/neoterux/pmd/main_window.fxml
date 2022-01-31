@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" alignment="CENTER" prefHeight="400.0" prefWidth="600.0"
-      spacing="35.0" xmlns="http://javafx.com/javafx/17" fx:controller="com.neoterux.pmd.controllers.MainController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="35.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neoterux.pmd.controllers.MainController">
     <HBox alignment="CENTER">
-        <HBox alignment="CENTER" fillHeight="false" style="-fx-border-color: black;-fx-border-width: 3px">
-            <Label style="-fx-font-size: 40px" text="Application logo goes here"/>
-        </HBox>
+      <children>
+         <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@styles/logo_app.png" />
+            </image>
+         </ImageView>
+      </children>
     </HBox>
     <VBox alignment="TOP_CENTER" spacing="10.0">
-        <Button mnemonicParsing="false" onAction="#joinGame" prefHeight="30.0" text="Unirse a un juego"/>
-        <Button mnemonicParsing="false" onAction="#newGame" prefHeight="30.0" text="Crear un juego"/>
+        <Button mnemonicParsing="false" onAction="#joinGame" prefHeight="30.0" text="Unirse a un juego" />
+        <Button mnemonicParsing="false" onAction="#newGame" prefHeight="30.0" text="Crear un juego" />
     </VBox>
 
 </VBox>
