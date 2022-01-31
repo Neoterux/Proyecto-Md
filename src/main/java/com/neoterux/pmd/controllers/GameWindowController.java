@@ -97,16 +97,15 @@ public class GameWindowController implements Runnable {
         String word = this.wordProperty.get();
         for (int i = 0; i < word.length(); i++)
             if (word.charAt(i) == letter.charAt(0))
-                wordContainer.getChildren().set(i, genImageHolder(letter, true));
+                wordContainer.getChildren().set(i, genImageHolder(letter, false));
     }
     
     @SuppressWarnings ("unchecked")
     private <E extends Node> WordHolder<E> genImageHolder (String letter, boolean test) {
-        if (test) {
-            return (WordHolder<E>) new TextHolder(letter);
-        } else {
-            return (WordHolder<E>) new ImageHolder(images.get(letter));
-        }
+        Image img = images.getOrDefault(letter, null);
+        if (img == null || test)
+            return (WordHolder<E>) new TextHolder(letter);// Fallback
+        return (WordHolder<E>) new ImageHolder(img);
     }
     
     public void onLooseGame () {
@@ -289,6 +288,7 @@ public class GameWindowController implements Runnable {
                 ImageView iv = new ImageView(img);
                 iv.setPreserveRatio(true);
                 iv.setFitWidth(btn.getWidth());
+                iv.setFitHeight(btn.getHeight());
                 btn.setGraphic(iv);
             }
         }
