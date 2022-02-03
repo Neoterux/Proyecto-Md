@@ -1,17 +1,12 @@
 package com.neoterux.pmd;
 
-import com.neoterux.pmd.controllers.MainController;
 import com.neoterux.pmd.controllers.OwnerWindowController;
+import com.neoterux.pmd.utils.FXMLStageBuilder;
+import com.neoterux.pmd.utils.exceptions.StageBuildException;
 import com.neoterux.server.api.ServerManager;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-
-import static com.neoterux.pmd.utils.JfxUtils.getLoaderOf;
 
 public class MainApp extends Application {
     
@@ -37,19 +32,16 @@ public class MainApp extends Application {
     public void start (Stage primaryStage) {
         rootStage = primaryStage;
         try {
-            rootStage.getIcons().add(new Image(getClass().getResource("icon/icon_32.png").toExternalForm()));
-            rootStage.setTitle("Bienvenido al Juego");
-            var loader = getLoaderOf("main_window.fxml");
-            loader.setControllerFactory(param -> new MainController(primaryStage));
-            Scene mainScene = new Scene(loader.load());
-            primaryStage.setScene(mainScene);
+            new FXMLStageBuilder(getClass(), "main_window.fxml")
+                    .setStageConfigurator(stage -> {
+                        stage.setTitle("Bienvenido al juego");
+                        System.out.println("This is executing?");
+                    })
+                    .applyTo(primaryStage);
             primaryStage.show();
-        } catch (NullPointerException | IOException npe) {
-            System.out.println("This should not execute!!");
-            npe.printStackTrace();
-        } catch (Exception e ){
-            System.out.println("Unknown exception");
-            e.printStackTrace();
+        }catch (StageBuildException sbe) {
+            System.err.println("Error while building Stage");
+            sbe.printStackTrace();
         }
         System.out.println("Start method end:");
     }

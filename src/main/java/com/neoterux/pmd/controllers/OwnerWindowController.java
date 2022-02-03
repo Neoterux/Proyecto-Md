@@ -3,6 +3,7 @@ package com.neoterux.pmd.controllers;
 import com.neoterux.pmd.components.PlayerLifeContainer;
 import com.neoterux.pmd.components.TextHolder;
 import com.neoterux.pmd.components.WordHolder;
+import com.neoterux.pmd.utils.Controller;
 import com.neoterux.server.api.Client;
 import com.neoterux.server.api.ServerManager;
 import javafx.application.Platform;
@@ -34,7 +35,7 @@ import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-public class OwnerWindowController implements Initializable, Runnable {
+public class OwnerWindowController extends Controller implements Initializable, Runnable {
     
     public static final ThreadPoolExecutor workers = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
     private static final Logger log = LoggerFactory.getLogger(OwnerWindowController.class);
@@ -78,11 +79,17 @@ public class OwnerWindowController implements Initializable, Runnable {
     }
     
     @Override
+    protected void afterInstanciate () {
+        log.info("Initializing the Owner window");
+    }
+    
+    @Override
     public void initialize (URL location, ResourceBundle resources) {
         gameStarted = false;
     }
     
-    public void onWindowLoaded (WindowEvent event) {
+    
+    public void onWindowShowAction (WindowEvent event) {
         Stage s = (Stage) event.getSource();
         Alert a = new Alert(Alert.AlertType.INFORMATION, "Creando Juego", ButtonType.CANCEL);
         a.initOwner(s);
@@ -169,8 +176,8 @@ public class OwnerWindowController implements Initializable, Runnable {
             }
         } catch (IOException ioe) {
             log.error("Error while fetching commands", ioe);
-            onWindowClosed(new WindowEvent(this.cancelButton.getScene().getWindow(),
-                                           WindowEvent.WINDOW_CLOSE_REQUEST
+            onWindowCloseAction(new WindowEvent(this.cancelButton.getScene().getWindow(),
+                                                WindowEvent.WINDOW_CLOSE_REQUEST
             ));
         }
     }
@@ -297,7 +304,7 @@ public class OwnerWindowController implements Initializable, Runnable {
         ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).close();
     }
     
-    public void onWindowClosed (WindowEvent event) {
+    public void onWindowCloseAction (WindowEvent event) {
         closeAll();
     }
 }
