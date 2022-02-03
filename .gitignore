@@ -1,5 +1,7 @@
 # Project exclude paths
 /target/
+build/
+.gradle/
 /images
 /images/*
 *.dat
