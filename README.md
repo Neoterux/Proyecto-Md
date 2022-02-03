@@ -9,6 +9,11 @@ encriptación.
 
 Necesita ejecutar en mavel el goal `javafx:run` para poder ejecutar la aplicación en Java.
 
+## Requerimientos
+- IDE con soporte de Gradle o Maven
+- Java 17 (JDK)
+- Carpeta con imágenes en la ruta de ejecución con el formato: `<letra>.[jpg, png, webp]`
+
 ### Imágenes:
 
 ## [ TODO ] 
